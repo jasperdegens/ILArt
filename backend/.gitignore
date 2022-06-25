@@ -1,2 +1,5 @@
 node_modules
 dist
+
+// ignore service keys
+src/keys.ts
