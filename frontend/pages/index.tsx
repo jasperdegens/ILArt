@@ -6,6 +6,7 @@ import ParameterPanel from '../components/ParameterPanel'
 import ParameterUI from '../components/ParameterUI'
 import VideoPlayer from '../components/VideoPlayer'
 
+const streamSource = 'https://livepeercdn.com/hls/47bbpaildwtap9uk/index.m3u8'
 
 const Home: NextPage = () => {
   
@@ -18,7 +19,7 @@ const Home: NextPage = () => {
       {/* Section for video stream, will  */}
       <div className='fixed w-full h-full bg-pink-400 -z-10'>
         <div className='w-full h-full flex justify-center items-center '>
-          <VideoPlayer />
+          <VideoPlayer src={streamSource} />
         </div>
       </div>
 
