@@ -10,6 +10,7 @@ interface IParameterData {
     
     paramType: ParameterType,
     name: string,
+    id: number,
     data: number[]
 
 }

@@ -14,16 +14,19 @@ const testParams: IParameterData[] = [
     {
         data: [],
         name: "Background Color",
-        paramType: "color"
+        id: 1,
+        paramType: "color",
     },
     {
         data: [],
         name: "Foreground Color",
+        id: 2,
         paramType: "color"
     },
     {
         data: [],
         name: "Noise Power",
+        id: 3,
         paramType: "float"
     }
 ] 
@@ -72,6 +75,8 @@ const ParameterPanel : FC<IParameterPanelProps> = ({handleSubmit, parameters}) =
                       key={p.name} 
                       name={p.name}
                       paramType={p.paramType}
+                      id={p.id}
+                      data={p.data}
                     />
                   ))}
                 </div>

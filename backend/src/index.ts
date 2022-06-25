@@ -61,6 +61,7 @@ function addInteractionSocketCommunicator(wss: WebSocketServer) {
 
 async function main() {
 
+    console.log("starting websocket server...")
     const wss = new WebSocketServer({port: port})
 
     // setup blockchain listener for events on LIArt Contract

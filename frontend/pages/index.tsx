@@ -40,14 +40,6 @@ const Home: NextPage = () => {
               Disconnect
           </button>
       ) : ''}
-
-      <main className='pt-2'>
-        <h1 className='w-full text-center text-4xl'>
-          IL Art
-        </h1>
-
-      </main>
-
       
 
       <footer className='fixed bottom-0 w-full h-8'>

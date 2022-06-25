@@ -14,17 +14,27 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const ParameterUI : FC<IParameterData> = ({name, paramType}) => {
+// we are using uint16 on the client side, so this gives us a max val to use to normalize
+const uintExponent = 16
+const maxVal = Math.pow(2, 16) - 1
 
-    const [val, setVal] = useState([0])
+function transformToNormalizedUint16(n: number): number {
+    console.log(n)
+    return Math.floor(n * maxVal)
+}
+
+const ParameterUI : FC<IParameterData> = ({name, paramType, id}) => {
+
+    const [parameterValue, setParameterValue] = useState([0])
     const [sendingTx, setSendingTx] = useState(false)
 
     const { ilArtContract } = useContext(BlockchainContext)
 
+    // function to submit interaction data to contract
     const tryInteraction = async () => {
         setSendingTx(true)
             
-        const tx = await ilArtContract?.Interact(1, [1], [1, 1]) 
+        const tx = await ilArtContract?.Interact(1, [id], parameterValue.map(transformToNormalizedUint16)) 
 
         await tx?.wait();
 
@@ -52,8 +62,8 @@ const ParameterUI : FC<IParameterData> = ({name, paramType}) => {
                     <Disclosure.Panel as="dd" className="mt-4">
                         <div className="flex w-full h-full justify-center items-center mb-4">
                             {paramType == "color" ? 
-                                <ColorParameter handleChange={setVal}/> :
-                                <SliderParameter handleChange={setVal} /> }
+                                <ColorParameter handleChange={setParameterValue}/> :
+                                <SliderParameter handleChange={setParameterValue} /> }
                         </div>
                         <button
                             className="mt-3 w-full inline-flex justify-center rounded-md border border-green-300 shadow-sm px-4 py-2 bg-green-500 text-base text-white font-bold hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-2 sm:text-sm"
@@ -80,7 +90,8 @@ const ColorParameter : FC<IParameterChanged> = ({handleChange}) => {
     return (
         <RgbaColorPicker color={color} onChange={(d) => {
             setColor(d);
-            handleChange([d.r, d.g, d.b, d.a])
+            // 0-255 so normalize
+            handleChange([d.r, d.g, d.b, d.a].map((n) => n / 255.0))
         }} />
     )
 
