@@ -1,9 +1,17 @@
 import { WebSocketServer } from "ws";
+import { pinToIPFS } from "./ipfsUpload";
 
 const port = 8080
 
 
-function main() {
+
+
+
+async function main() {
+
+
+    await pinToIPFS('../renders/ethNYC.png')
+
     const wss = new WebSocketServer({port: port})
 
 

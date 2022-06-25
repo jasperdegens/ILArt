@@ -5,11 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "@types/ws": "^8.5.3",
+    "axios": "^0.27.2",
+    "form-data": "^4.0.0",
     "tsc-watch": "^5.0.3",
     "typescript": "^4.7.4",
     "ws": "^8.8.0"
   },
   "scripts": {
-    "watch" : "tsc-watch -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
+    "watch": "tsc-watch -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
   }
 }
