@@ -10,11 +10,15 @@ const videoPlayerDefaultOptions: VideoJsPlayerOptions = {
     responsive: true,
     fluid: true,
     sources: [
-        {src: "https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"}
+        {src: "https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8d"}
     ]
 }
 
-const VideoPlayer : FC<VideoJsPlayerOptions> = () => {
+interface IVideoPlayerProps {
+    src?: string
+}
+
+const VideoPlayer : FC<IVideoPlayerProps> = ({src}) => {
     
     
     const videoRef = useRef(null)
@@ -26,16 +30,26 @@ const VideoPlayer : FC<VideoJsPlayerOptions> = () => {
         if (!playerRef.current) {
             
             const options: VideoJsPlayerOptions = {...videoPlayerDefaultOptions}
+            
+            // add source if passrd to component
+            if (src) {
+                options!.sources = [{src: src}]
+            }
+
+
             const videoElement = videoRef.current;
 
             if (!videoElement) return;
 
             const player = videojs(videoElement, options, () => {
-            videojs.log('player is ready');
+                videojs.log('player is ready');
+                
+                // trigger play -- should autoplay cause muted but just in case
+                player.play()
             });
         }
 
-    }, [videoRef]);
+    }, [src, videoRef]);
 
     // dispose when dismounted
     useEffect(() => {

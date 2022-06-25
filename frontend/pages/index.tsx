@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { VideoJsPlayerOptions } from 'video.js'
+import ParameterPanel from '../components/ParameterPanel'
+import ParameterUI from '../components/ParameterUI'
 import VideoPlayer from '../components/VideoPlayer'
 
 
@@ -15,9 +17,13 @@ const Home: NextPage = () => {
 
       {/* Section for video stream, will  */}
       <div className='fixed w-full h-full bg-pink-400 -z-10'>
-        <VideoPlayer />
+        <div className='w-full h-full flex justify-center items-center '>
+          <VideoPlayer />
+        </div>
       </div>
 
+      {/* UI Settings */}
+      <ParameterPanel />
 
 
       <main className='pt-2'>
