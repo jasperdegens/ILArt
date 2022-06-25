@@ -33,30 +33,39 @@ const IntroModal: FC = () => {
 
     const trySignMessage = async () => {
         if (!provider) return
-        setSigningMessage(true)
 
-        const signer = await provider.getSigner()
+        try {
+            
+            
+            setSigningMessage(true)
 
-        const msg = await signer.signMessage("Authorize me to participate!")
+            const signer = await provider.getSigner()
 
-        const res = await fetch('/api/authenticate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                msg: msg
+            const msg = await signer.signMessage("Authorize me to participate!")
+
+            const res = await fetch('/api/authenticate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    msg: msg
+                })
             })
-        })
-        console.log(res)
+            console.log(res)
 
-        console.log(msg)
+            console.log(msg)
 
-        setSigningMessage(false)
+            setSigningMessage(false)
 
-        setIntroComplete(true)
+            setIntroComplete(true)
 
-        return msg;
+            return msg;
+        } catch (error) {
+            setSigningMessage(false)   
+        }
+
+        return ''
 
     }
 
@@ -199,7 +208,7 @@ const IntroModal: FC = () => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
-               {introComplete ? introCompleteContent : provider ? signMessageContent : (awaitingConnect ? '' : introContent)}
+               {introComplete ? introCompleteContent : provider ? signMessageContent : (awaitingConnect ? introContent : introContent)}
               </Dialog.Panel>
             </Transition.Child>
           </div>

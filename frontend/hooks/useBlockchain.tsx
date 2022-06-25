@@ -28,27 +28,46 @@ const BlockchainProvider = ({ children }: {children: ReactNode}): ReactElement =
     const [ilArtContract, setIlArtContract] = useState<ILArt | undefined> (undefined)
 
     const connectWallet = useCallback(async () => {
-        console.log('connecting wallet')
-        const walletConnectProvider = new WalletConnectProvider({
-            infuraId: '8b20db45f0eb43b8a83e655de8149a2d',
-            rpc: {
-                1085866509: 'https://hackathon.skalenodes.com/v1/downright-royal-saiph',
-            },
-          
-        })
-        await walletConnectProvider.enable()
-        setWcProvider(walletConnectProvider)
-        const provider = new ethers.providers.Web3Provider(walletConnectProvider)
-        setProvider(provider)
-        console.log(provider)
+        try {
+            console.log('connecting wallet')
+            const walletConnectProvider = new WalletConnectProvider({
+                infuraId: '8b20db45f0eb43b8a83e655de8149a2d',
+                rpc: {
+                    1085866509: 'https://hackathon.skalenodes.com/v1/downright-royal-saiph',
+                },
+            
+            })
+            await walletConnectProvider.enable()
+            await walletConnectProvider.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                    chainName: 'SKALE Hackathon',
+                    chainId: '0x40b9020d',
+                    rpcUrls: ['https://hackathon.skalenodes.com/v1/downright-royal-saiph']
+                }]
+            })
+            await walletConnectProvider.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{chainId: '0x40b9020d'}]
+            })
 
-        // connect wallet to contract as well
-    
-        // @ts-ignore
-        const ilArt = ILArt__factory.connect(process.env.NEXT_PUBLIC_ILART_ADDRESS, await provider.getSigner())
-        console.log(ilArt)
+            setWcProvider(walletConnectProvider)
+            const provider = new ethers.providers.Web3Provider(walletConnectProvider)
+            setProvider(provider)
+            console.log(provider)
 
-        setIlArtContract(ilArt)
+            // connect wallet to contract as well
+        
+            // @ts-ignore
+            const ilArt = ILArt__factory.connect(process.env.NEXT_PUBLIC_ILART_ADDRESS, await provider.getSigner())
+            
+
+
+            setIlArtContract(ilArt)
+        } catch (error) {
+            
+        }
+
 
         return provider ? true : false
 

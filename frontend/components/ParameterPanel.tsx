@@ -52,7 +52,7 @@ const ParameterPanel : FC<IParameterPanelProps> = ({handleSubmit, parameters}) =
           <Popover.Button
             className={classNames(
                 open ? 'text-gray-900' : 'text-gray-500',
-                'float-right inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-2 sm:text-sm'
+                'float-right inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-100 text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-2 sm:text-sm'
                 )}
                 >
             <span>Parameters</span>

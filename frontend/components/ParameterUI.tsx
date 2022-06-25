@@ -29,21 +29,35 @@ const ParameterUI : FC<IParameterData> = ({name, paramType, id}) => {
     const [parameterValue, setParameterValue] = useState([0])
     const [sendingTx, setSendingTx] = useState(false)
 
-    const { ilArtContract } = useContext(BlockchainContext)
+    const { ilArtContract, provider } = useContext(BlockchainContext)
 
     // function to submit interaction data to contract
     const tryInteraction = async () => {
-        setSendingTx(true)
-        const t = toast("Please confirm with your wallet!", {
-            type: "info",
-            theme: "colored",
-            autoClose: false
-        })
-        const tx = await ilArtContract?.Interact(1, [id], parameterValue.map(transformToNormalizedUint16)) 
-        
-        toast.dismiss(t)
 
-        await tx?.wait();
+        try {
+        
+            setSendingTx(true)
+            const t = toast("Please confirm with your wallet!", {
+                type: "info",
+                theme: "colored",
+                autoClose: false
+            })
+            const tx = await ilArtContract?.Interact(
+                1, 
+                [id], 
+                parameterValue.map(transformToNormalizedUint16),
+                {
+                    
+                }
+            ) 
+            
+            toast.dismiss(t)
+
+            await tx?.wait();
+
+        } catch (error) {
+                
+        }
 
         setSendingTx(false)
 
@@ -76,7 +90,7 @@ const ParameterUI : FC<IParameterData> = ({name, paramType, id}) => {
                             className="mt-3 w-full inline-flex justify-center rounded-md border border-green-300 shadow-sm px-4 py-2 bg-green-500 text-base text-white font-bold hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-2 sm:text-sm"
                             onClick={tryInteraction}
                         >
-                            {sendingTx ? 'Confirm with device!' : 'Send Interaction!'}
+                            {!provider ? 'Connect Wallet' : sendingTx ? 'Confirm with device!' : 'Send Interaction!'}
                         </button>
                     </Disclosure.Panel>
                 </>
