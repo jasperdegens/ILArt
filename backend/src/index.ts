@@ -3,11 +3,12 @@ import { setupInteractionListener } from "./contractListener";
 import { IPFS_GATEWAY } from "./envVariables";
 import { pinToIPFS } from "./ipfsUpload";
 import { mintNft } from "./mintNFT";
+import path from 'path'
 
 const port = 80
 
-const testName = 'EthNyc'
-const testDescription = 'test nft'
+const testName = (artworkId: number) => `IL Art #${artworkId}`
+const testDescription = (artworkId: number) => `This is your snapshot from an Interactive Live Art performance for artwork #${artworkId} during the EthNewYork event. Thanks for your participation!`
 const dummyAddress = '0x9F47095f446ab4E761eE17376cf1698DF04A31CC'
 
 
@@ -16,6 +17,11 @@ async function pinAndMint(filePath: string) {
     // upload to ipfs via storj pinning service
     const ipfsHash = await pinToIPFS(filePath)
     console.log(ipfsHash)
+
+    // extract metadata from filename
+    const baseName = path.parse(filePath).name
+    const [addr, nftNumber] = baseName.split('_')
+    console.log(addr, nftNumber)
 
     // mint via nft port
     // await mintNft(`${IPFS_GATEWAY}/${ipfsHash}`, dummyAddress, testName, testDescription)
