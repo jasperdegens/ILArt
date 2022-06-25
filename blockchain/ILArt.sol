@@ -18,12 +18,12 @@ contract ILArt {
      * from the audience. Artist needs to process the participation themselves
      *
      * Multiple parameters can be updated on the same event.
-     *
+     * Using uint16 for parameterValue so can easily convert to normalized float on artwork side. 
      */
-    event ParameterChanged(address caller, uint artworkId, uint[] parameterIds, uint[] parametervalues);
+    event ParameterChanged(address caller, uint artworkId, uint[] parameterIds, uint16[] parametervalues);
 
 
-    function Interact(uint artworkId, uint[] calldata parameterIds, uint[] calldata parameterValues) public {
+    function Interact(uint artworkId, uint[] calldata parameterIds, uint16[] calldata parameterValues) public {
         emit ParameterChanged(msg.sender, artworkId, parameterIds, parameterValues);
     }
 

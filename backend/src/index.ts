@@ -1,4 +1,5 @@
 import { WebSocketServer } from "ws";
+import { setupInteractionListener } from "./contractListener";
 import { IPFS_GATEWAY } from "./envVariables";
 import { pinToIPFS } from "./ipfsUpload";
 import { mintNft } from "./mintNFT";
@@ -12,8 +13,6 @@ const dummyAddress = '0x9F47095f446ab4E761eE17376cf1698DF04A31CC'
 
 async function pinAndMint(filePath: string) {
 
-    
-
     // upload to ipfs via storj pinning service
     const ipfsHash = await pinToIPFS(filePath)
     console.log(ipfsHash)
@@ -24,32 +23,46 @@ async function pinAndMint(filePath: string) {
 
 
 
-function setupWebsocketServer() {
-
-    const wss = new WebSocketServer({port: port})
+function addPinAndMintListener(wss: WebSocketServer) {
 
     wss.on('connection', function(ws) {
-
         console.log('socket connection began')
-
         ws.on('message', (m) => {
-            console.log(m.toString())
             pinAndMint(m.toString())
-
-
         })
     })
 
 }
 
+function addInteractionSocketCommunicator(wss: WebSocketServer) {
+    
+    // create handler tied to this websocket server
+    function eventEmitter (address: string, artworkId: number, parameterIds: number[], parameterValues: number[] ) {
+        console.log(wss.clients)
+        wss.clients.forEach((ws) => {
+            console.log('sending to client')
+            ws.send(JSON.stringify({
+                address,
+                artworkId,
+                parameterIds,
+                parameterValues
+            }))
+        })
+    }
+    return eventEmitter
+}
+
 
 async function main() {
 
+    const wss = new WebSocketServer({port: port})
 
-    
+    // setup blockchain listener for events on LIArt Contract
+    const interactionToClients = addInteractionSocketCommunicator(wss)
+    setupInteractionListener(interactionToClients)
 
-
-    setupWebsocketServer()
+    // setup pinning and minting handler
+    addPinAndMintListener(wss)
 }
 
 
