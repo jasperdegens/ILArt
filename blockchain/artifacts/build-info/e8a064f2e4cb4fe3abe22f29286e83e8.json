@@ -1,0 +1,68 @@
+{
+	"id": "e8a064f2e4cb4fe3abe22f29286e83e8",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.7",
+	"solcLongVersion": "0.8.7+commit.e28d00a7",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"ILArt.sol": {
+				"content": "// SPDX-License-Identifier: MIT\r\n// IL (Interactive Live) Art Contract\r\n\r\npragma solidity ^0.8.0;\r\n\r\n/**\r\n * @dev This is a very simple contract that can record participation in a\r\n * live stream. It is meant to be deployed on a no/low gas blockchain. Handling\r\n * of emitted events relies on the implentation of the artist.\r\n *\r\n */\r\n"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": false,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			}
+		}
+	},
+	"output": {
+		"sources": {
+			"ILArt.sol": {
+				"ast": {
+					"absolutePath": "ILArt.sol",
+					"exportedSymbols": {},
+					"id": 2,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 1,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "74:23:0"
+						}
+					],
+					"src": "74:261:0"
+				},
+				"id": 0
+			}
+		}
+	}
+}

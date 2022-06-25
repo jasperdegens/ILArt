@@ -1,0 +1,106 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "artworkId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "parameterIds",
+						"type": "uint256[]"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "parametervalues",
+						"type": "uint256[]"
+					}
+				],
+				"name": "ParameterChanged",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "artworkId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "parameterIds",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "parameterValues",
+						"type": "uint256[]"
+					}
+				],
+				"name": "Interact",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "This is a very simple contract that can record participation in a live stream. It is meant to be deployed on a no/low gas blockchain. Handling of emitted events relies on the implentation of the artist.",
+			"events": {
+				"ParameterChanged(address,uint256,uint256[],uint256[])": {
+					"details": "ParameterChanged is the core event and is emitted when there is participation from the audience. Artist needs to process the participation themselves Multiple parameters can be updated on the same event."
+				}
+			},
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"ILArt.sol": "ILArt"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ILArt.sol": {
+			"keccak256": "0xfa19835a4be963c6f4d09b07a9818cd93840d6bb37fbad19d23fad36b9b10a60",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ce5607802cede7d592ffc7876b3ec938b732600d04f31d9564634c833d0934bb",
+				"dweb:/ipfs/QmUFkrnVvbepnAEDtFYHfUzvdT4tJmDa2QLgLoR6Fook3z"
+			]
+		}
+	},
+	"version": 1
+}
