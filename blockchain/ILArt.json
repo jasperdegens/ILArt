@@ -1,0 +1,56 @@
+[
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "caller",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "artworkId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256[]",
+                "name": "parameterIds",
+                "type": "uint256[]"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint16[]",
+                "name": "parametervalues",
+                "type": "uint16[]"
+            }
+        ],
+        "name": "ParameterChanged",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "artworkId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "parameterIds",
+                "type": "uint256[]"
+            },
+            {
+                "internalType": "uint16[]",
+                "name": "parameterValues",
+                "type": "uint16[]"
+            }
+        ],
+        "name": "Interact",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]

@@ -31,8 +31,6 @@ const Home: NextPage = () => {
       {/* UI Settings */}
       <ParameterPanel />
 
-
-      <main className='pt-2'>
       {provider ? (
         <button
               type="button"
@@ -42,6 +40,8 @@ const Home: NextPage = () => {
               Disconnect
           </button>
       ) : ''}
+
+      <main className='pt-2'>
         <h1 className='w-full text-center text-4xl'>
           IL Art
         </h1>
@@ -50,8 +50,11 @@ const Home: NextPage = () => {
 
       
 
-      <footer className='fixed bottom-0 w-full h-8 bg-green-300'>
-
+      <footer className='fixed bottom-0 w-full h-8'>
+        <div className='max-w-4xl mx-auto px-10 py-2 flex justify-between items-center text-gray-400'>
+          <h4 className='text-sm'>IL Art -- Eth NY Hackathon</h4>
+          <h5 className='text-xs'>By Jasper Degens</h5>
+        </div>
       </footer>
     </div>
   )

@@ -2,17 +2,21 @@ import { ReactNode, ReactElement, useState, useMemo, useCallback, createContext 
 import {ethers} from 'ethers'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { disconnect } from 'process'
+import { ILArt, ILArt__factory } from '../types/ethers-contracts'
+
+
 
 interface IBlockchainProviderData {
     provider?: ethers.providers.Web3Provider,
     connectWallet?: () => Promise<boolean>
-    disconnectWallet? : () => void
+    disconnectWallet? : () => void,
+    ilArtContract?: ILArt
 }
 
 const blockchainProviderDefaults: IBlockchainProviderData = {
     provider: undefined,
     connectWallet: undefined,
-    disconnectWallet : () => {}
+    disconnectWallet : () => {},
 }
 
 const BlockchainContext = createContext(blockchainProviderDefaults)
@@ -21,6 +25,7 @@ const BlockchainProvider = ({ children }: {children: ReactNode}): ReactElement =
 
     const [provider, setProvider] = useState<ethers.providers.Web3Provider | undefined>(undefined)
     const [wcProvider, setWcProvider] = useState<WalletConnectProvider | null>(null)
+    const [ilArtContract, setIlArtContract] = useState<ILArt | undefined> (undefined)
 
     const connectWallet = useCallback(async () => {
         console.log('connecting wallet')
@@ -36,6 +41,15 @@ const BlockchainProvider = ({ children }: {children: ReactNode}): ReactElement =
         const provider = new ethers.providers.Web3Provider(walletConnectProvider)
         setProvider(provider)
         console.log(provider)
+
+        // connect wallet to contract as well
+    
+        // @ts-ignore
+        const ilArt = ILArt__factory.connect(process.env.NEXT_PUBLIC_ILART_ADDRESS, await provider.getSigner())
+        console.log(ilArt)
+
+        setIlArtContract(ilArt)
+
         return provider ? true : false
 
     }, [])
@@ -46,6 +60,7 @@ const BlockchainProvider = ({ children }: {children: ReactNode}): ReactElement =
         wcProvider.disconnect()
         setWcProvider(null)
         setProvider(undefined)
+        setIlArtContract(undefined)
 
     }, [wcProvider])
 
@@ -54,9 +69,10 @@ const BlockchainProvider = ({ children }: {children: ReactNode}): ReactElement =
         ({
             provider,
             connectWallet,
-            disconnectWallet
+            disconnectWallet,
+            ilArtContract
         })
-    , [provider, connectWallet, disconnectWallet])
+    , [provider, connectWallet, disconnectWallet, ilArtContract])
 
 
     return (
