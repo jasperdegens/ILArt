@@ -4,6 +4,7 @@ import { RgbaColorPicker } from 'react-colorful'
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { BlockchainContext } from "../hooks/useBlockchain";
+import {toast} from 'react-toastify'
 
 interface IParameterUIProps {
     name: string,
@@ -33,8 +34,14 @@ const ParameterUI : FC<IParameterData> = ({name, paramType, id}) => {
     // function to submit interaction data to contract
     const tryInteraction = async () => {
         setSendingTx(true)
-            
+        const t = toast("Please confirm with your wallet!", {
+            type: "info",
+            theme: "colored",
+            autoClose: false
+        })
         const tx = await ilArtContract?.Interact(1, [id], parameterValue.map(transformToNormalizedUint16)) 
+        
+        toast.dismiss(t)
 
         await tx?.wait();
 

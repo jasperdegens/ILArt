@@ -1,8 +1,9 @@
 import { Menu, Popover, Transition } from "@headlessui/react";
-import { FC, Fragment } from "react";
+import { FC, Fragment, useContext } from "react";
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import ParameterUI from "./ParameterUI";
 import { IParameterData } from "../types/interactionParameter";
+import { BlockchainContext } from "../hooks/useBlockchain";
 
 
 interface IParameterPanelProps {
@@ -37,7 +38,11 @@ function classNames(...classes) {
 
 const ParameterPanel : FC<IParameterPanelProps> = ({handleSubmit, parameters}) => {
 
-    
+    const {provider, disconnectWallet, connectWallet} = useContext(BlockchainContext)
+
+    // hide buttons when mouse is still
+
+
     return (
 
     <div className="absolute right-0">
@@ -46,16 +51,25 @@ const ParameterPanel : FC<IParameterPanelProps> = ({handleSubmit, parameters}) =
         <>
           <Popover.Button
             className={classNames(
-              open ? 'text-gray-900' : 'text-gray-500',
-              ' p-4 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 float-right'
-            )}
-          >
+                open ? 'text-gray-900' : 'text-gray-500',
+                'float-right inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-2 sm:text-sm'
+                )}
+                >
             <span>Parameters</span>
             <ChevronDownIcon
               className={classNames(open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500')}
               aria-hidden="true"
-            />
+              />
           </Popover.Button>
+            (
+              <button
+                    type="button"
+                    className="float-right mr-2 inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-2 bg-white bg-opacity-20 text-base font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-2 sm:text-sm"
+                    onClick={provider ? () => disconnectWallet!() : () => connectWallet!()}
+                >
+                    {provider ? 'Disconnect' : 'Connect' }
+                </button>
+            ) 
           <div style={{clear: 'both'}} />
 
           <Transition
