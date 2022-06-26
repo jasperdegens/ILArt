@@ -7,9 +7,8 @@ import path from 'path'
 
 const port = 80
 
-const testName = (artworkId: number) => `IL Art #${artworkId}`
-const testDescription = (artworkId: number) => `This is your snapshot from an Interactive Live Art performance for artwork #${artworkId} during the EthNewYork event. Thanks for your participation!`
-const dummyAddress = '0x9F47095f446ab4E761eE17376cf1698DF04A31CC'
+const testName = (artworkId: string) => `IL Art #${artworkId}`
+const testDescription = (artworkId: string) => `This is your snapshot from an Interactive Live Art performance for artwork #${artworkId} during the EthNewYork event. Thanks for your participation!`
 
 
 async function pinAndMint(filePath: string) {
@@ -24,7 +23,9 @@ async function pinAndMint(filePath: string) {
     console.log(addr, nftNumber)
 
     // mint via nft port
-    // await mintNft(`${IPFS_GATEWAY}/${ipfsHash}`, dummyAddress, testName, testDescription)
+    setTimeout(async () => {
+        await mintNft(`${IPFS_GATEWAY}/${ipfsHash}`, addr, testName(nftNumber), testDescription(nftNumber))
+    }, 2000)
 }
 
 

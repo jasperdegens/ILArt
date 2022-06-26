@@ -3,7 +3,7 @@ import { MINT_CHAIN } from './envVariables';
 import { NFT_PORT_API_KEY } from './keys'
 
 
-async function mintNft(fileUrl: string, targetAddress: string, name: string, description: string): Promise<boolean> {
+async function mintNft(fileUrl: string, targetAddress: string, name: string, description: string, timesTried = 0): Promise<boolean> {
 
 
     // set NFTPort options
@@ -24,10 +24,16 @@ async function mintNft(fileUrl: string, targetAddress: string, name: string, des
     };
 
     try {
-        const res = await axios.request(options).catch(c => {
+        
+        await axios.request(options).catch(c => {
             console.log(c.response.data)
+            if(timesTried < 5)
+            setTimeout(() => {
+                mintNft(fileUrl, targetAddress, name, description, timesTried +1)
+            }, 5000)
         })
-        console.log(res)
+    
+        console.log('Minted successfully!')
         return true
 
     } catch (error) {
