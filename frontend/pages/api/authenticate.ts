@@ -34,7 +34,8 @@ export default async function handler(
   // let sb = await wallet.getBalance()
   // console.log(sb.toString())
 
-  wallet.sendTransaction(tx)
+  const t = await wallet.sendTransaction(tx)
+  await t.wait()
   // await x.wait()
 
   // sb = await wallet.getBalance()
