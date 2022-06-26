@@ -20,16 +20,22 @@ const testParams: IParameterData[] = [
     },
     {
         data: [],
+        name: "Noise Power",
+        id: 3,
+        paramType: "float"
+    },
+    {
+        data: [],
+        name: "Feedback Scale",
+        id: 4,
+        paramType: "float"
+    },
+    {
+        data: [],
         name: "Foreground Color",
         id: 2,
         paramType: "color"
     },
-    {
-        data: [],
-        name: "Noise Power",
-        id: 3,
-        paramType: "float"
-    }
 ] 
 
 function classNames(...classes) {
